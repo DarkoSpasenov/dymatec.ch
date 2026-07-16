@@ -147,6 +147,11 @@
   }
   .logo-mark::before{ width:38px; height:8px; bottom:0; left:0; }
   .logo-mark::after{ width:8px; height:38px; top:0; right:0; }
+  .logo-img{
+    height:56px;
+    width:auto;
+    display:block;
+  }
   .logo small{
     display:block;
     font-family:var(--font-body);
@@ -755,6 +760,14 @@
   .footer-logo .logo-mark{ width:30px; height:30px; }
   .footer-logo .logo-mark::before{ width:30px; height:6px; }
   .footer-logo .logo-mark::after{ width:6px; height:30px; }
+  .footer-logo-img{
+    height:52px;
+    width:auto;
+    display:block;
+    background:var(--white);
+    padding:6px 10px;
+    border-radius:6px;
+  }
   .footer-col p{ font-size:13.5px; line-height:1.7; }
   .footer-col h4{
     font-family:var(--font-display);
@@ -833,8 +846,7 @@
 <header>
   <div class="container header-inner">
     <a href="#top" class="logo">
-      <span class="logo-mark" aria-hidden="true"></span>
-      DYMATEC
+      <img src="images/dymateclogo.jpg" alt="Dymatec - Chauffage, Sanitaire, Ventilation" class="logo-img">
     </a>
 
     <nav class="main-nav" aria-label="Navigation principale">
@@ -1166,8 +1178,7 @@
     <div class="footer-grid">
       <div class="footer-col">
         <div class="footer-logo">
-          <span class="logo-mark" aria-hidden="true"></span>
-          DYMATEC
+          <img src="images/dymateclogo.jpg" alt="Dymatec - Chauffage, Sanitaire, Ventilation" class="footer-logo-img">
         </div>
         <p>Entreprise de sanitaire, chauffage et ventilation. Installation, rénovation et dépannage pour particuliers et professionnels.</p>
       </div>

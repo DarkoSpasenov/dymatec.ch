@@ -479,39 +479,24 @@
 
   /* ---------- Réalisations ---------- */
   .realisations{ padding:104px 0; background:var(--off-white); }
-  .filter-tabs{
-    display:flex;
-    gap:0;
-    margin-bottom:40px;
-    border:1px solid var(--blue-deep);
-    width:fit-content;
-  }
-  .filter-tabs button{
-    font-family:var(--font-display);
-    font-weight:700;
-    font-size:12.5px;
-    letter-spacing:0.05em;
-    text-transform:uppercase;
-    background:var(--white);
-    color:var(--blue-deep);
-    border:none;
-    padding:12px 20px;
-    cursor:pointer;
-    border-right:1px solid var(--blue-deep);
-    transition:background .15s ease, color .15s ease;
-  }
-  .filter-tabs button:last-child{ border-right:none; }
-  .filter-tabs button.active,
-  .filter-tabs button:hover{
-    background:var(--blue-deep);
-    color:var(--white);
-  }
 
-  .gallery-grid{
-    display:grid;
-    grid-template-columns:repeat(3,1fr);
-    gap:2px;
-    background:var(--border);
+  .gallery-slider{
+    position:relative;
+    overflow:hidden;
+  }
+  .gallery-track{
+    display:flex;
+    gap:8px;
+    overflow-x:auto;
+    scroll-behavior:smooth;
+    scroll-snap-type:x mandatory;
+    -webkit-overflow-scrolling:touch;
+    scrollbar-width:none;
+  }
+  .gallery-track::-webkit-scrollbar{ display:none; }
+  .gallery-track .gallery-item{
+    flex:0 0 calc((100% - 16px) / 3);
+    scroll-snap-align:start;
   }
   .gallery-item{
     background:var(--white);
@@ -523,6 +508,32 @@
     width:100%;
     height:100%;
     object-fit:cover;
+  }
+  .slider-btn{
+    position:absolute;
+    top:50%;
+    transform:translateY(-50%);
+    width:44px;
+    height:44px;
+    border:1px solid var(--blue-deep);
+    background:var(--white);
+    color:var(--blue-deep);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    cursor:pointer;
+    font-size:18px;
+    z-index:5;
+    transition:background .15s ease, color .15s ease;
+  }
+  .slider-btn:hover{ background:var(--blue-deep); color:var(--white); }
+  .slider-btn.prev{ left:12px; }
+  .slider-btn.next{ right:12px; }
+  @media (max-width:960px){
+    .gallery-track .gallery-item{ flex:0 0 calc((100% - 8px) / 2); }
+  }
+  @media (max-width:640px){
+    .gallery-track .gallery-item{ flex:0 0 100%; }
   }
   .gallery-placeholder{
     width:100%;
@@ -911,14 +922,14 @@
     <div class="service-grid">
 
       <div class="service-card">
-        <span class="service-num">01 — Sanitaire</span>
+        <span class="service-num"> Sanitaire</span>
         <svg class="service-icon" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2">
           <rect x="8" y="20" width="32" height="16" />
           <path d="M14 20v-4a6 6 0 0 1 12 0" />
           <circle cx="30" cy="28" r="2" fill="currentColor" stroke="none"/>
           <path d="M8 36v3M40 36v3"/>
         </svg>
-        <h3>Sanitaire &amp; plomberie</h3>
+        <h3>Sanitaire </h3>
         <p>Installation et rénovation complète de vos points d'eau, recherche et réparation de fuites.</p>
         <ul class="service-list">
           <li>Salle de bain &amp; WC</li>
@@ -929,7 +940,7 @@
       </div>
 
       <div class="service-card">
-        <span class="service-num">02 — Chauffage</span>
+        <span class="service-num"> Chauffage</span>
         <svg class="service-icon" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2">
           <rect x="10" y="8" width="28" height="32" />
           <path d="M16 16v16M24 16v16M32 16v16" />
@@ -946,7 +957,7 @@
       </div>
 
       <div class="service-card">
-        <span class="service-num">03 — Ventilation</span>
+        <span class="service-num"> Ventilation</span>
         <svg class="service-icon" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2">
           <circle cx="24" cy="24" r="16" />
           <path d="M24 24 L24 10 A14 14 0 0 1 36 18 Z" fill="currentColor" stroke="none" opacity="0.15"/>
@@ -990,76 +1001,33 @@
         <span class="eyebrow">Nos réalisations</span>
         <h2>Des chantiers menés avec rigueur</h2>
       </div>
-      <p>Un aperçu de nos installations et dépannages récents. Ajoutez vos propres photos de chantier pour enrichir cette galerie.</p>
+      <p>Un aperçu de nos installations et dépannages récents.</p>
     </div>
 
-    <div class="filter-tabs">
-      <button class="active" data-filter="all">Tout</button>
-      <button data-filter="sanitaire">Sanitaire</button>
-      <button data-filter="chauffage">Chauffage</button>
-      <button data-filter="ventilation">Ventilation</button>
-    </div>
-
-    <div class="gallery-grid" id="galleryGrid">
-      <div class="gallery-item" data-cat="sanitaire">
-    <img src="images/sanitaire1.jpg" alt="">
-</div>
-<div class="gallery-item" data-cat="sanitaire">
-    <img src="images/sanitaire2.jpg" alt="">
-</div>
-<div class="gallery-item" data-cat="sanitaire">
-    <img src="images/sanitaire3.jpg" alt="">
-</div>
-<div class="gallery-item" data-cat="sanitaire">
-    <img src="images/sanitaire4.jpg" alt="">
-</div>
-<div class="gallery-item" data-cat="sanitaire">
-    <img src="images/sanitaire5.jpg" alt="">
-</div>
-<div class="gallery-item" data-cat="sanitaire">
-    <img src="images/sanitaire6.jpg" alt="">
-</div>
-<div class="gallery-item" data-cat="sanitaire">
-    <img src="images/sanitaire7.jpg" alt="">
-</div>
-<div class="gallery-item" data-cat="sanitaire">
-    <img src="images/sanitaire8.jpg" alt="">
-</div>
-<div class="gallery-item" data-cat="sanitaire">
-    <img src="images/sanitaire9.jpg" alt="">
-</div>
-<div class="gallery-item" data-cat="sanitaire">
-    <img src="images/sanitaire10.jpg" alt="">
-</div>
-      <div class="gallery-item" data-cat="chauffage">
-    <img src="images/chauffage1.jpg" alt="">
-</div>
-<div class="gallery-item" data-cat="chauffage">
-    <img src="images/chauffage2.jpg" alt="">
-</div>
-<div class="gallery-item" data-cat="chauffage">
-    <img src="images/chauffage3.jpg" alt="">
-</div>
-<div class="gallery-item" data-cat="chauffage">
-    <img src="images/chauffage4.jpg" alt="">
-</div>
-<div class="gallery-item" data-cat="chauffage">
-    <img src="images/chauffage5.jpg" alt="">
-</div>
-<div class="gallery-item" data-cat="chauffage">
-    <img src="images/chauffage6.jpg" alt="">
-</div>
-     <div class="gallery-item" data-cat="ventilation">
-    <img src="images/ventilation1.jpg" alt="">
-</div>
-    <div class="gallery-item" data-cat="ventilation">
-    <img src="images/ventilation2.jpg" alt="">
-</div>
-    <div class="gallery-item" data-cat="ventilation">
-    <img src="images/ventilation3.jpg" alt="">
-</div>
-        </div>
+    <div class="gallery-slider">
+      <button class="slider-btn prev" id="galleryPrev" aria-label="Image précédente">&#8249;</button>
+      <div class="gallery-track" id="galleryGrid">
+        <div class="gallery-item"><img src="images/sanitaire1.jpg" alt="Réalisation sanitaire"></div>
+        <div class="gallery-item"><img src="images/sanitaire2.jpg" alt="Réalisation sanitaire"></div>
+        <div class="gallery-item"><img src="images/sanitaire3.jpg" alt="Réalisation sanitaire"></div>
+        <div class="gallery-item"><img src="images/sanitaire4.jpg" alt="Réalisation sanitaire"></div>
+        <div class="gallery-item"><img src="images/sanitaire5.jpg" alt="Réalisation sanitaire"></div>
+        <div class="gallery-item"><img src="images/sanitaire6.jpg" alt="Réalisation sanitaire"></div>
+        <div class="gallery-item"><img src="images/sanitaire7.jpg" alt="Réalisation sanitaire"></div>
+        <div class="gallery-item"><img src="images/sanitaire8.jpg" alt="Réalisation sanitaire"></div>
+        <div class="gallery-item"><img src="images/sanitaire9.jpg" alt="Réalisation sanitaire"></div>
+        <div class="gallery-item"><img src="images/sanitaire10.jpg" alt="Réalisation sanitaire"></div>
+        <div class="gallery-item"><img src="images/chauffage1.jpg" alt="Réalisation chauffage"></div>
+        <div class="gallery-item"><img src="images/chauffage2.jpg" alt="Réalisation chauffage"></div>
+        <div class="gallery-item"><img src="images/chauffage3.jpg" alt="Réalisation chauffage"></div>
+        <div class="gallery-item"><img src="images/chauffage4.jpg" alt="Réalisation chauffage"></div>
+        <div class="gallery-item"><img src="images/chauffage5.jpg" alt="Réalisation chauffage"></div>
+        <div class="gallery-item"><img src="images/chauffage6.jpg" alt="Réalisation chauffage"></div>
+        <div class="gallery-item"><img src="images/ventilation1.jpg" alt="Réalisation ventilation"></div>
+        <div class="gallery-item"><img src="images/ventilation2.jpg" alt="Réalisation ventilation"></div>
+        <div class="gallery-item"><img src="images/ventilation3.jpg" alt="Réalisation ventilation"></div>
       </div>
+      <button class="slider-btn next" id="galleryNext" aria-label="Image suivante">&#8250;</button>
     </div>
   </div>
 </section>
@@ -1075,22 +1043,22 @@
     </div>
     <div class="pourquoi-grid">
       <div class="pourquoi-item">
-        <span class="num">A</span>
+        <span class="num"></span>
         <strong>Devis gratuit</strong>
         <p>Un chiffrage clair et détaillé avant chaque intervention, sans engagement.</p>
       </div>
       <div class="pourquoi-item">
-        <span class="num">B</span>
+        <span class="num"></span>
         <strong>Artisans qualifiés</strong>
         <p>Une équipe formée et certifiée, spécialisée en sanitaire, chauffage et ventilation.</p>
       </div>
       <div class="pourquoi-item">
-        <span class="num">C</span>
+        <span class="num"></span>
         <strong>Intervention rapide</strong>
         <p>Une astreinte 24h/24 et 7j/7 pour les pannes et fuites urgentes.</p>
       </div>
       <div class="pourquoi-item">
-        <span class="num">D</span>
+        <span class="num"></span>
         <strong>Travail garanti</strong>
         <p>Toutes nos installations sont couvertes par une garantie décennale.</p>
       </div>
@@ -1195,7 +1163,7 @@
       <div class="footer-col">
         <h4>Services</h4>
         <ul>
-          <li><a href="#services">Sanitaire &amp; plomberie</a></li>
+          <li><a href="#services">Sanitaire </a></li>
           <li><a href="#services">Chauffage</a></li>
           <li><a href="#services">Ventilation</a></li>
           <li><a href="#depannage">Dépannage d'urgence</a></li>
@@ -1233,19 +1201,41 @@
     });
   });
 
-  // Filtre galerie réalisations
-  const filterButtons = document.querySelectorAll('.filter-tabs button');
-  const galleryItems = document.querySelectorAll('#galleryGrid .gallery-item');
-  filterButtons.forEach(btn => {
-    btn.addEventListener('click', () => {
-      filterButtons.forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
-      const filter = btn.dataset.filter;
-      galleryItems.forEach(item => {
-        item.style.display = (filter === 'all' || item.dataset.cat === filter) ? '' : 'none';
-      });
+  // Slider galerie réalisations
+  const galleryTrack = document.getElementById('galleryGrid');
+  const galleryPrev = document.getElementById('galleryPrev');
+  const galleryNext = document.getElementById('galleryNext');
+  if(galleryTrack){
+    const scrollStep = () => {
+      const item = galleryTrack.querySelector('.gallery-item');
+      return item ? item.getBoundingClientRect().width + 8 : 300;
+    };
+    galleryNext.addEventListener('click', () => {
+      galleryTrack.scrollBy({ left: scrollStep(), behavior: 'smooth' });
     });
-  });
+    galleryPrev.addEventListener('click', () => {
+      galleryTrack.scrollBy({ left: -scrollStep(), behavior: 'smooth' });
+    });
+    let autoSlide = setInterval(() => {
+      const maxScroll = galleryTrack.scrollWidth - galleryTrack.clientWidth;
+      if(galleryTrack.scrollLeft >= maxScroll - 5){
+        galleryTrack.scrollTo({ left: 0, behavior: 'smooth' });
+      } else {
+        galleryTrack.scrollBy({ left: scrollStep(), behavior: 'smooth' });
+      }
+    }, 3000);
+    galleryTrack.addEventListener('mouseenter', () => clearInterval(autoSlide));
+    galleryTrack.addEventListener('mouseleave', () => {
+      autoSlide = setInterval(() => {
+        const maxScroll = galleryTrack.scrollWidth - galleryTrack.clientWidth;
+        if(galleryTrack.scrollLeft >= maxScroll - 5){
+          galleryTrack.scrollTo({ left: 0, behavior: 'smooth' });
+        } else {
+          galleryTrack.scrollBy({ left: scrollStep(), behavior: 'smooth' });
+        }
+      }, 3000);
+    });
+  }
 
   // Formulaire de devis : envoi via Netlify Forms
   const form = document.getElementById('devisForm');
